@@ -96,11 +96,16 @@ from customer c
 group by c.customer_id
 order by last_name;
 -- 7a. The music of Queen and Kris Kristofferson have seen an unlikely resurgence. As an unintended consequence, films starting with the letters `K` and `Q` have also soared in popularity. Use subqueries to display the titles of movies starting with the letters `K` and `Q` whose language is English.
-select title, name
+--
+select title
 from film
-    join language 
-        on film.language_id = language.language_id
-where   title like 'K%' or title like 'G%';
+where   ((title like 'K%') or (title like 'Q%'))
+and language_id in (
+select language_id
+from language
+where name = 'English'
+)
+;
 --
 -- * 7b. Use subqueries to display all actors who appear in the film `Alone Trip`.
 -- subq and two variations of join below 
